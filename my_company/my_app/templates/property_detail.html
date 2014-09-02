@@ -1,0 +1,249 @@
+{% extends 'base.html' %} 
+
+{% block main-wrapper %}
+<div id="main-wrapper">
+	<div id="main">
+		<div id="main-inner">
+			<div id="map-property"></div>
+			<!-- /.map-property -->
+
+			<div class="container">
+				<div class="block-content block-content-small-padding">
+					<div class="block-content-inner">
+						<div class="row">
+							<div class="col-sm-9">
+								<h2 class="property-detail-title">{{highlight}}</h2>
+								<h3 class="property-detail-subtitle">
+									{{house.Address}}, {{house.District.Name}}, Tp.HCM <strong>{{formatted_price}} / 1 tháng</strong>
+								</h3>
+
+								<div class="property-detail-overview">
+									<div class="property-detail-overview-inner clearfix">
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Giá thuê:</strong> <span>{{formatted_price}}</span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+										
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Giá điện:</strong> <span>{{house.ElectricityPrice}}</span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Giá nước:</strong> <span>{{house.WaterPrice}}</span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Diện tích:</strong> <span>{{house.Size}} m<sup>2</sup></span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Phòng ngủ:</strong> {{house.BedRooms}}</span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+
+										<div class="property-detail-overview-item col-sm-6 col-md-2">
+											<strong>Toalet:</strong> <span>{{house.Toalets}}</span>
+										</div>
+										<!-- /.property-detail-overview-item -->
+
+									</div>
+									<!-- /.property-detail-overview-inner -->
+								</div>
+								<!-- /.property-detail-overview -->
+
+								<div class="flexslider">
+									<ul class="slides">
+										{% for link in images %}
+										<li data-thumb="{{link}}">
+											<img src="{{link}}"
+											alt="">
+										</li>
+										{% endfor %}
+									</ul>
+									<!-- /.slides -->
+								</div>
+								<!-- /.flexslider -->
+
+								<hr>
+
+								<h2>Mô tả</h2>
+
+								<p>{{ house.Description }}</p>
+
+								<hr>
+
+								<h2>Các tiện nghi</h2>
+
+								<div class="row">
+									<ul class="property-detail-amenities">
+										{% if house.HasAirCondition != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasAirCondition %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Có máy lạnh</li>
+										{% endif %}
+										{% if house.CanCook != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.CanCook %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Được nấu ăn</li>
+										{% endif %}
+										{% if house.IsFreeTime != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.IsFreeTime %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Giờ giấc tự do</li>
+										{% endif %}
+										{% if house.IsSeperateGate != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.IsSeperateGate %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Lối đi riêng với chủ</li>
+										{% endif %}
+										{% if house.HasInternet != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasInternet %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Internet</li>
+										{% endif %}
+										{% if house.HasTvCable != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasTvCable %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Truyền hình cáp</li>
+										{% endif %}
+										{% if house.IsQuiet != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.IsQuiet %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Khu yên tĩnh</li>
+										{% endif %}
+										{% if house.HasFurniture != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasFurniture %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Có nội thất</li>
+										{% endif %}
+										{% if house.HasPrivateToalet != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasPrivateToalet %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Toalet riêng</li>
+										{% endif %}
+										{% if house.HasBalcony != None %}
+										<li class="col-xs-6 col-sm-4"><i class="fa {%if house.HasBalcony %}fa-check ok {% else %} fa-ban no {% endif %}"></i>Có ban công</li>
+										{% endif %}
+									</ul>
+								</div>
+								<!-- /.row -->
+							</div>
+
+							<div class="col-sm-3">
+								<div class="sidebar">
+									<div class="sidebar-inner">
+										<div class="widget">
+											<h3 class="widget-title">Liên hệ xem nhà</h3>
+
+											<div class="widget-content">
+												<div class="form-group">
+													<label>Gọi cho chúng tôi theo số:</label> 
+													<h3>0986 409 239</h3>
+												</div>
+												<div class="form-group">
+													<label>Hoặc để lại lời nhắn:</label>
+													<textarea class="form-control" id="message"></textarea>
+													<label>Chúng tôi sẽ liên hệ với bạn</label>
+													<label id="sent-message" style="color: green; display: none;">Xin cảm ơn, chúng tôi sẽ gọi bạn ngay</label>
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group">
+													<input type="text" value="Gửi" id="send-message"
+														class="btn btn-block btn-primary btn-inversed">
+												</div>
+											</div>
+											<!-- /.widget-content -->
+										</div>
+										<!-- /.widget -->
+										<div class="widget">
+											<h3 class="widget-title" style="font-size: 28px;">Các nhà xung quanh</h3>
+											<div class="properties-small-list" id="related-house">
+												
+
+											</div>
+											<!-- /.properties-small-list -->
+										</div>
+										<!-- /.widget -->
+									</div>
+									<!-- /.sidebar-inner -->
+								</div>
+								<!-- /.sidebar -->
+							</div>
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.block-content-inner -->
+				</div>
+				<!-- /.block-content -->
+			</div>
+			<!-- /.container -->
+		</div>
+		<!-- /#main-inner -->
+	</div>
+	<!-- /#main -->
+</div>
+<!-- /#main-wrapper -->
+
+<div class="property-small clearfix" id="related-sample" style="display:none">
+	<div class="property-small-picture col-sm-12 col-md-4">
+		<div class="property-small-picture-inner">
+			<a href="{link}" class="property-small-picture-target"> <img
+				src="{img}"
+				alt="">
+			</a>
+		</div>
+		<!-- /.property-small-picture -->
+	</div>
+	<!-- /.property-small-picture -->
+
+	<div class="property-small-content col-sm-12 col-md-8">
+		<h3 class="property-small-title">
+			<a href="{link}">{highlight}</a>
+		</h3>
+		<!-- /.property-small-title -->
+		<div class="property-small-price">
+			{price} <span class="property-small-price-suffix">/
+				1 tháng</span>
+		</div>
+		<!-- /.property-small-price -->
+	</div>
+	<!-- /.property-small-content -->
+</div>
+<!-- /.property-small -->
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+var lat = {{house.Coordinate.x}};
+var lon = {{house.Coordinate.y}};
+var detail = true;
+var type_detail = {{house.Type}};
+var type_image = '{{img_icon|safe}}';
+$.ajax({
+	type: "GET",
+	url: "json/get-related-house/",
+	data:{ 
+			'lat': lat,
+			'lon': lon,
+			'pk': {{pk}}
+	},
+	headers: {'X-CSRFToken': csrftoken}
+})
+.done(function(response) {
+	var data = response.related_house;
+	if (data) {
+		$.each(data, function(item, content) {
+			var element_content = $('#related-sample').html();
+			element_content = element_content.replace(/{link}/g, content.link);
+			element_content = element_content.replace(/{img}/g, content.img);
+			element_content = element_content.replace(/{price}/g, content.price);
+			element_content = element_content.replace(/{highlight}/g, content.address + ', ' + content.district);
+			var element = $('<div class="property-small clearfix">' + element_content + '</div>');
+			$('#related-house').append(element);
+		});
+	}
+});
+
+$('#send-message').click(function() {
+	var message = $('#send-message').val();
+	if (message != '') {
+		$.ajax({
+			type: "POST",
+			url: "json/send-message/",
+			data:{ 
+					'content': message
+			},
+			headers: {'X-CSRFToken': csrftoken}
+		})
+		.done(function(response) {
+			$('#sent-message').show();			
+		});
+	}
+});
+</script>
+{% endblock %}

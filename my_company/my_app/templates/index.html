@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+
+{% block style %}
+.order_by a { cursor: pointer; }
+{% endblock %}
+
+{% block main-wrapper %}
+<div id="main-wrapper">
+	<div id="main">
+		<div id="main-inner">
+
+			<!-- MAP -->
+			<div class="block-content no-padding">
+				<div class="block-content-inner">
+					<div class="map-wrapper">
+						<div id="map" data-style="1"></div>
+						<!-- /#map -->
+
+						<div class="container">
+							<div class="row">
+								<div
+									class="col-sm-4 col-sm-offset-8 col-md-3 col-md-offset-10 map-navigation-positioning">
+									<div class="map-navigation-wrapper">
+										<div class="map-navigation">
+											<!-- <div><button class="pull-right" id="hide_search_map">Thu gọn</button></div> -->
+											<div id="div-search-map">
+												<div class="form-group col-sm-12">
+													<!-- <label>Country</label> -->
+
+													<div class="select-wrapper">
+														<select id="select-type"
+															class="form-control house-type">
+															<option value="">Chọn loại nhà muốn thuê</option> 
+															{% for item in HouseTypes %}
+															<option value="{{item.0}}">{{item.1}}</option> 
+															{% endfor %}
+														</select>
+													</div>
+													<!-- /.select-wrapper -->
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-12">
+													<!-- <label>Location</label> -->
+
+													<div class="select-wrapper">
+														<select id="select-district" class="form-control district">
+															<option value="">Chọn quận/huyện</option>
+														</select>
+													</div>
+													<!-- /.select-wrapper -->
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-12">
+													<!-- <label>Property Type</label> -->
+
+													<input type="text" class="form-control address" id="select-address"
+														placeholder="Nhập địa điểm">
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-12">
+													<!-- <label>Sublocation</label> -->
+
+													<div class="select-wrapper">
+														<select id="select-radius"
+															class="form-control radius">
+															<option value="">Chọn bán kính</option>
+															<option value="1">1km</option>
+															<option value="2">2km</option>
+															<option value="3">3km</option>
+															<option value="5">5km</option>
+															<option value="10">10km</option>
+															<option value="20">20km</option>
+															<option value="30">30km</option>
+															<option value="50">50km</option>
+														</select>
+													</div>
+													<!-- /.select-wrapper -->
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-6">
+													<!-- <label>Giá tối thiểu</label> -->
+													<input type="text" class="form-control min-price" id="min-price"
+														placeholder="Giá tối thiểu">
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-6">
+													<!-- <label>Price To</label> -->
+													<input type="text" class="form-control max-price" id="max-price"
+														placeholder="Giá tối đa">
+												</div>
+												<!-- /.form-group -->
+
+												<div class="form-group col-sm-12">
+													<button class="btn btn-success btn-block house-search" id="id_map_search">
+													<i class="fa fa-search" style="margin-right: 5px;"></i>
+														Tìm kiếm <em class='rightImage'></em>
+													</button>
+												</div>
+												<!-- /.form-group -->
+											</div>
+										</div>
+										<!-- /.map-navigation -->
+									</div>
+									<!-- /.map-navigation-wrapper -->
+								</div>
+								<!-- /.col-sm-3 -->
+							</div>
+							<!-- /.row -->
+						</div>
+						<!-- /.container -->
+
+					</div>
+					<!-- /.map-wrapper -->
+				</div>
+				<!-- /.block-content-inner -->
+			</div>
+			<!-- /.block-content -->
+			<div class="container">
+				<!-- SLOGAN -->
+				<div
+					class="block-content background-primary background-map block-content-small-padding fullwidth">
+					<div class="block-content-inner">
+						<h2 class="no-margin center caps">TÌM NHÀ TRỌ TRONG 5 PHÚT</h2>
+					</div>
+					<!-- /.block-content-iner -->
+				</div>
+				<!-- /.block-content-->
+				<!-- ISOTOPE GRID -->
+				<div class="block-content block-content-small-padding">
+					<div class="block-content-inner">
+						<h2 class="center">NHÀ ĐANG CHO THUÊ</h2>
+
+				<!-- 		<ul class="properties-filter mh-properties-filter">
+							<li><strong>Lọc theo: </strong></li>
+							<li><select class="district"><option>Quận/Huyện</option></select></li>
+							<li><select><option>Mức giá</option></select></li>
+						</ul> -->
+						<ul class="properties-filter mh-properties-filter">
+							<li><strong>Sắp xếp theo: </strong></li>
+							<li class="order_by selected" order_by="-CreatedTime"><a><span>Mới
+										nhất</span></a></li>
+							<li class="order_by" order_by="distance"><a><span>Gần nhất</span></a></li>
+							<li class="order_by" order_by="Price"><a><span>Giá
+										thấp nhất</span></a></li>
+							<li class="order_by" order_by="-Price"><a><span>Giá
+										cao nhất</span></a></li>
+							<li class="order_by" order_by="Size"><a><span>Diện
+										tích nhỏ nhất</span></a></li>
+							<li class="order_by" order_by="-Size"><a><span>Diện
+										tích lớn nhất</span></a></li>
+						</ul>
+						<!-- /.property-filter -->
+
+						<div class="properties-items">
+							<div class="row" id="house_results">
+								
+							</div>
+							<!-- /.row -->
+
+						</div>
+						<!-- /.properties-items -->
+
+					</div>
+					<!-- /.block-content-inner -->
+				</div>
+				<!-- /.block-content -->
+				<!-- CAROUSEL -->
+
+			</div>
+			<!-- /.container -->
+		</div>
+		<!-- /#main-inner -->
+	</div>
+	<!-- /#main -->
+</div>
+<!-- /#main-wrapper -->
+
+
+<div id="result_template" style="display:none;">
+<div class="property-item property-featured col-sm-6 col-md-3">
+	<div class="property-box">
+		<div class="property-box-inner">
+			<h3 class="property-box-title">
+				<a href="{link}">{street}</a>
+			</h3>
+			<h4 class="property-box-subtitle">
+				<a href="{link}">{district}</a>
+			</h4>
+
+			<div class="property-box-label property-box-label-primary">{type}</div>
+			<!-- /.property-box-label -->
+
+			<div class="property-box-picture">
+				<div class="property-box-price">{price}</div>
+				<!-- /.property-box-price -->
+				<div class="property-box-picture-inner">
+					<a href="{link}" class="property-box-picture-target">
+						<img src="{img}"
+						alt="">
+					</a>
+					<!-- /.property-box-picture-target -->
+				</div>
+				<!-- /.property-picture-inner -->
+			</div>
+			<!-- /.property-picture -->
+
+			<div class="property-box-meta">
+				<div class="property-box-meta-item col-xs-4 col-sm-4">
+					<strong>{size}m<sup>2</sup></strong> <span>Diện tích</span>
+				</div>
+				<!-- /.col-sm-3 -->
+
+				<div class="property-box-meta-item col-xs-4 col-sm-4">
+					<strong>{bedroom}</strong> <span>Phòng ngủ</span>
+				</div>
+				<!-- /.col-sm-3 -->
+
+				<div class="property-box-meta-item col-xs-4 col-sm-4">
+					<strong>{toalet}</strong> <span>Toalet</span>
+				</div>
+				<!-- /.col-sm-3 -->
+			</div>
+			<!-- /.property-box-meta -->
+		</div>
+		<!-- /.property-box-inner -->
+	</div>
+	<!-- /.property-box -->
+</div>
+<!-- /.property-item -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+var detail = false;
+var search_params = {};
+searchHouses({'order_by': '-CreatedTime'}, false);
+</script>
+{% endblock %}
